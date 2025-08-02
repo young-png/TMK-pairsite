@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TMK Login Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: linear-gradient(145deg, #0a0a0a, #1a1a1f);
+      color: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 2rem;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ff3366;
+      text-shadow: 0 0 10px rgba(255, 51, 102, 0.4);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #121217;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 12px 30px rgba(255, 0, 102, 0.08);
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: #ff3366;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #2a2a33;
+      border-radius: 10px;
+      background: #181820;
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #ff3366;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #ff3366;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    button:hover {
+      background-color: #e22c5c;
+      transform: scale(1.02);
+    }
+
+    .footer-note {
+      margin-top: 1.5rem;
+      font-size: 0.85rem;
+      color: #888;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <header>TMK Access Panel</header>
+
+  <div class="container">
+    <div class="card">
+      <h2>Login to Your Dashboard</h2>
+      <form action="/login" method="POST">
+        <input type="text" name="username" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Passkey" required />
+        <button type="submit">Access Dashboard</button>
+      </form>
+      <div class="footer-note">© TMK Team | Gabimaru Systems</div>
+    </div>
+  </div>
+
+  <footer>&copy; 2025 TMK | All rights reserved</footer>
+
+</body>
+</html>
