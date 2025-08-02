@@ -1,0 +1,23 @@
+{
+  "name": "tmk-pairing-server",
+  "version": "1.0.0",
+  "description": "Express backend to pair WhatsApp via Baileys",
+  "main": "site.js",
+  "scripts": {
+    "start": "node site.js"
+  },
+  "keywords": ["pairing"],
+  "author": "Gabimaru",
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/boom": "^10.0.0",
+    "cheerio": "^1.0.0-rc.10",
+    "@whiskeysockets/baileys": "github:holyrag/XD-Baileys",
+    "chalk": "^4.1.2",
+    "@bochilteam/scraper": "^5.0.1",
+    "cfonts": "^3.3.0",
+    "sharp": "^0.32.6",
+    "pino": "^7.0.5",
+    "express": "^4.19.2"
+  }
+}
