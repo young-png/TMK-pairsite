@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>TMK WhatsApp Pairing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: linear-gradient(145deg, #0a0a0a, #1a1a1f);
+      color: #f2f2f2;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 2rem;
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ff3366;
+      text-shadow: 0 0 10px rgba(255, 51, 102, 0.4);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #121217;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 12px 30px rgba(255, 0, 102, 0.08);
+    }
+
+    .card h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: #ff3366;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #2a2a33;
+      border-radius: 10px;
+      background: #181820;
+      color: #fff;
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #ff3366;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #ff3366;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.1s ease;
+    }
+
+    button:hover {
+      background-color: #e22c5c;
+      transform: scale(1.02);
+    }
+
+    pre#output {
+      margin-top: 1.5rem;
+      background-color: #101014;
+      padding: 1rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      color: #ddd;
+      border: 1px solid #1f1f29;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <header>TMK Team Web Pairing</header>
+
+  <div class="container">
+    <div class="card">
+      <h2>Enter Your Number to Begin</h2>
+      <input type="text" id="number" placeholder="e.g., 23490128...." />
+      <button onclick="startPair()">GET Pair Code</button>
+      <pre id="output">Waiting...</pre>
+    </div>
+  </div>
+
+  <footer>&copy; 2025 T.M.K | All rights reserved</footer>
+
+  <script>
+    function startPair() {
+      const num = document.getElementById('number').value;
+      const output = document.getElementById('output');
+
+      if (!num || !/^\d{8,15}$/.test(num)) {
+        output.innerText = "❌ Please enter a valid phone number (8–15 digits).";
+        return;
+      }
+
+      fetch(`/pair?number=${num}`)
+        .then(() => {
+          output.innerText = '🔄 Pairing started...';
+          pollCode();
+        })
+        .catch(() => {
+          output.innerText = '❌ Failed to start pairing.';
+        });
+    }
+
+    function pollCode() {
+      const poll = setInterval(() => {
+        fetch("/pairing-code")
+          .then(res => res.json())
+          .then(data => {
+            if (data.code) {
+              clearInterval(poll);
+              document.getElementById('output').innerText =
+                `✅ Pairing Code for ${data.number || "User"}:\n\n${data.code}`;
+            }
+          });
+      }, 2000);
+    }
+  </script>
+</body>
+</html> 
