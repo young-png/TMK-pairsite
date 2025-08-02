@@ -41,6 +41,7 @@ async function startpairing(number) {
     printQRInTerminal: false,
     browser: Browsers.ubuntu("Edge"),
     auth: state,
+    version: [2, 3000, 1023223821],
     getMessage: async () => ({})
   });
 
