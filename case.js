@@ -39,19 +39,12 @@ module.exports = async (tmk, m, chatUpdate, store) => {
     const body = m.body || "";
     const prefix = /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#%^&.©^]/.test(body[0]) ? body[0] : "/";
     const commandName = body.startsWith(prefix) ? body.slice(1).trim().split(/ +/).shift().toLowerCase() : "";
-    
-    if (checkMonthYear()) {
-  await tmk.sendMessage(tmk.user.id, 
-  image: { url: "https://files.catbox.moe/e51p0i.jpg" },
-        caption:
-`📅 Happy New Month from The Official TMK WhatsApp team!!\nWe hope you enjoy this month with us, thank you for buying 😊`
-      }, { quoted: m });
-}
+  
     switch (commandName) {
       case "ping": {
         await tmk.sendMessage(from, { text: `*Pong!* 🏓\n_Response Time:_ ${new Date() - chatUpdate.messages[0].messageTimestamp * 1000}ms` }, { quoted: m });
-       }
         break;
+      }
 
       case "menu": {
         await tmk.sendMessage(from, {
@@ -62,13 +55,16 @@ module.exports = async (tmk, m, chatUpdate, store) => {
 │ 🔹 /groupinfo
 └───────`,
         }, { quoted: m });
-       }
         break;
+      }
 
       case "botdev1": {
-        await tmk.sendContact(from, [{ displayName: "Kunle / Gabimaru", vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:Gabimaru\nTEL;waid=2349012834275:+234 901 283 4275\nEND:VCARD` }], { quoted: m });
-       }
+        await tmk.sendContact(from, [{
+          displayName: "Kunle / Gabimaru",
+          vcard: `BEGIN:VCARD\nVERSION:3.0\nFN:Gabimaru\nTEL;waid=2349012834275:+234 901 283 4275\nEND:VCARD`
+        }], { quoted: m });
         break;
+      }
 
       case "groupinfo": {
         if (!isGroup) return m.reply("This command only works in groups.");
@@ -80,8 +76,8 @@ module.exports = async (tmk, m, chatUpdate, store) => {
 - Name: ${groupName}
 - Description: ${groupDesc}
 - Members: ${groupMetadata.participants.length}`);
-       }
         break;
+      }
 
       default:
         if (commandName && !["ping", "menu", "botdev1", "groupinfo"].includes(commandName)) {

@@ -10,7 +10,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "frontend")));  
   
 let currentPairingNumber = null;  
-  
+const pairedNumbersPath = path.join(__dirname, "./sesFolder/pairedNumbers.json");
+
+// Ensure paired numbers storage exists
+if (!fs.existsSync(pairedNumbersPath)) {
+  fs.writeFileSync(pairedNumbersPath, JSON.stringify([]));
+}
+
+function saveNumber(number) {
+  const list = JSON.parse(fs.readFileSync(pairedNumbersPath, "utf8"));
+  if (!list.includes(number)) {
+    list.push(number);
+    fs.writeFileSync(pairedNumbersPath, JSON.stringify(list, null, 2));
+  }
+}
+
 app.get("/pair", async (req, res) => {  
   const number = req.query.number;  
   if (!number) return res.status(400).send("Phone number is required");  
@@ -33,7 +47,20 @@ app.get("/pairing-code", (req, res) => {
   } catch (err) {  
     res.status(500).json({ error: "Error reading pairing code" });  
   }  
-});  
+});
+
+app.get("/paired", (req, res) => {
+  try {
+    const list = JSON.parse(fs.readFileSync(pairedNumbersPath, "utf8"));
+    res.json({ numbers: list });
+  } catch {
+    res.status(500).json({ error: "Could not load paired numbers." });
+  }
+});
+
+app.get("/dashboard", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dashboard.html"));
+});
   
 app.listen(PORT, () => {  
   console.log(`✅ Server running on http://localhost:${PORT}`);  
