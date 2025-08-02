@@ -18,21 +18,40 @@ if (!fs.existsSync(pairedNumbersPath)) {
 }
 
 function saveNumber(number) {
-  const list = JSON.parse(fs.readFileSync(pairedNumbersPath, "utf8"));
-  if (!list.includes(number)) {
-    list.push(number);
-    fs.writeFileSync(pairedNumbersPath, JSON.stringify(list, null, 2));
+  const clean = number.replace(/@s\.whatsapp\.net$/i, "");
+  const pairedPath = path.join(__dirname, "./sesFolder/pairedNumbers.json");
+
+  let list = { numbers: [] };
+
+  if (fs.existsSync(pairedPath)) {
+    try {
+      list = JSON.parse(fs.readFileSync(pairedPath, "utf8"));
+    } catch {
+      list = { numbers: [] };
+    }
+  }
+
+  if (!list.numbers.includes(clean)) {
+    list.numbers.push(clean);
+    fs.writeFileSync(pairedPath, JSON.stringify(list, null, 2));
   }
 }
 
-app.get("/pair", async (req, res) => {  
-  const number = req.query.number;  
-  if (!number) return res.status(400).send("Phone number is required");  
-  
-  currentPairingNumber = number;  
-  await startpairing(number);  
-  res.send("Pairing has started, please check /pairing-code ENDPOINT");  
-});  
+app.get("/pair", async (req, res) => {
+  const number = req.query.number;
+  if (!number) return res.status(400).send("Phone number is required");
+
+  currentPairingNumber = number;
+
+  try {
+    await startpairing(number);
+    saveNumber(number);
+    res.send("Pairing has started, please check /pairing-code ENDPOINT");
+  } catch (e) {
+    console.error("❌ Pairing error:", e);
+    res.status(500).send("Pairing failed.");
+  }
+});
   
 // Fetch the pairing code  
 app.get("/pairing-code", (req, res) => {  

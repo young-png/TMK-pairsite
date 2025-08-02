@@ -26,20 +26,24 @@ const moment = require("moment-timezone");
 
 module.exports = async (tmk, m, chatUpdate, store) => {
   try {
-    let senderJid = m.sender;
-    const decoded = jidDecode(senderJid);
+    if (!m || !m.sender || !m.key) return;
 
-    if (!decoded) {
-      console.log("⚠️ Could not decode JID:", senderJid);
+    let senderJid = m.sender;
+    let decoded;
+
+    try {
+      decoded = jidDecode(senderJid);
+    } catch (e) {
+      console.log("⚠️ jidDecode failed:", e);
     }
 
-    const username = decoded ? decoded.user : senderJid;
-    
+    const username = decoded && decoded.user ? decoded.user : jidNormalizedUser(senderJid);
+
     const { from, sender, text, isGroup, isBotAdmin, isAdmin, args, command } = m;
     const body = m.body || "";
-    const prefix = /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#%^&.©^]/.test(body[0]) ? body[0] : "/";
+    const prefix = /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#%^&.©^]/.test(body[0]) ? body[0] : ".";
     const commandName = body.startsWith(prefix) ? body.slice(1).trim().split(/ +/).shift().toLowerCase() : "";
-  
+
     switch (commandName) {
       case "ping": {
         await tmk.sendMessage(from, { text: `*Pong!* 🏓\n_Response Time:_ ${new Date() - chatUpdate.messages[0].messageTimestamp * 1000}ms` }, { quoted: m });
