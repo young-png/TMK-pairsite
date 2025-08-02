@@ -26,6 +26,15 @@ const moment = require("moment-timezone");
 
 module.exports = async (tmk, m, chatUpdate, store) => {
   try {
+    let senderJid = m.sender;
+    const decoded = jidDecode(senderJid);
+
+    if (!decoded) {
+      console.log("⚠️ Could not decode JID:", senderJid);
+    }
+
+    const username = decoded ? decoded.user : senderJid;
+    
     const { from, sender, text, isGroup, isBotAdmin, isAdmin, args, command } = m;
     const body = m.body || "";
     const prefix = /^[°•π÷×¶∆£¢€¥®™+✓_=|~!?@#%^&.©^]/.test(body[0]) ? body[0] : "/";
