@@ -30,7 +30,7 @@ function requireLogin(req, res, next) {
 }
 
 let currentPairingNumber = null;
-const pairedNumbersPath = path.join(__dirname, "../richstore/pairing/pairedNumbers.json");
+const pairedNumbersPath = path.join(__dirname, "./richstore/pairing/pairedNumbers.json");
 
 if (!fs.existsSync(pairedNumbersPath)) {
   fs.writeFileSync(pairedNumbersPath, JSON.stringify([]));
