@@ -70,8 +70,9 @@ app.get("/pairing-code", (req, res) => {
 
 app.get("/paired", (req, res) => {
   try {
-    const list = JSON.parse(fs.readFileSync(pairedNumbersPath, "utf8"));
-    res.json({ numbers: list });
+    const data = JSON.parse(fs.readFileSync(pairedNumbersPath, "utf8"));
+    
+    res.json({ numbers: data.numbers });
   } catch {
     res.status(500).json({ error: "Could not load paired numbers." });
   }
