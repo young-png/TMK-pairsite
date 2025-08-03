@@ -29,6 +29,7 @@
       "child_process":"^1.0.2",
       "cloudscraper":"^4.6.0",
       "cluster":"^0.7.7",
+      "express": "^4.19.2",
       "cookie":"^0.5.0",
       "form-data": "^4.0.0",
     "formdata-node": "^6.0.3",
