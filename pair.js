@@ -35,7 +35,7 @@ let store = makeInMemoryStore({logger: pino().child({level: 'silent',stream: 'st
 let msgRetryCounterCache;
 const retryMap440 = {};
 const idch = [
-  "120363401816875075@newsletter",
+  "120363402888937015@newsletter",
   "120363401816875075@newsletter"
 ];
 let retryCount440 = 0;
