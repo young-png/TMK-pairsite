@@ -12,8 +12,8 @@ global.DEVELOPER = ["7151373704"] //
 global.BOT_NAME = "TMK Team WA Bot"
 global.bankowner = "Ayodele"
 global.creatorName = "Gabimaru"
-global.ownernumber = '2349012834275'  //creator number
-global.location = "Nigeria, Ogun-state, ilese"
+global.ownernumber = '2348168000939'  //creator number
+global.location = "Nigeria, Abuja, kubwa"
 global.prefa = ['','!','.','#','&']
 //================DO NOT CHANGE OR YOU'LL GET AN ERROR=============\
 global.footer = "𝕽𝖎𝖈𝖍𝖎𝖊" //footer section
