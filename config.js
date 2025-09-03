@@ -1,7 +1,7 @@
 const fs = require('fs')
 
-global.owner = "234" //owner number
-global.footer = "T.M.K Team" //footer section
+global.owner = "2348168000939" //owner number
+global.footer = "Gødfather" //footer section
 global.status = false //"self/public" section of the bot
 global.prefa = ['','!','.',',','🐤','🗿']
 global.owner = ['62']
